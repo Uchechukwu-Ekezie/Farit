@@ -22,9 +22,8 @@ export const TOKEN_LABELS: Record<string, string> = {
   [TOKEN_MINTS.BONK]: 'BONK',
 }
 
-export const JUPITER_QUOTE_URL = 'https://quote-api.jup.ag/v6/quote'
-export const JUPITER_SWAP_URL  = 'https://quote-api.jup.ag/v6/swap'
-export const JUPITER_PRICE_URL = 'https://api.jup.ag/price/v2'
+export const LIFI_API          = 'https://li.quest/v1'
+export const LIFI_SOLANA_CHAIN = '1151111081099710'
 
 export const DEFAULT_SLIPPAGE_BPS = 50 // 0.5%
 

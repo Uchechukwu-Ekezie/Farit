@@ -4,8 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { useWallet } from '@/hooks/useWallet'
-import { getQuote } from '@/services/jupiter/quote'
-import { buildSwapTransaction } from '@/services/jupiter/swap'
+import { getLifiQuote, buildLifiSwapTransaction } from '@/services/lifi/swap'
 import { TOKEN_MINTS, DEFAULT_SLIPPAGE_BPS } from '@/constants/tokens'
 
 export default function SwapScreen() {
@@ -31,8 +30,8 @@ export default function SwapScreen() {
       setQuoting(true)
       try {
         const lamports = Math.floor(amountSol * 1e9)
-        const quote = await getQuote(fromMint, toMint, lamports, DEFAULT_SLIPPAGE_BPS)
-        const out   = (parseInt(quote.outAmount) / 1e6).toFixed(4)
+        const quote = await getLifiQuote(fromMint, toMint, lamports, address!, DEFAULT_SLIPPAGE_BPS)
+        const out   = (parseInt(quote.estimate.toAmount) / 1e6).toFixed(4)
         setQuoteOut(out)
       } catch {
         setQuoteOut(null)
@@ -51,7 +50,7 @@ export default function SwapScreen() {
     setLoading(true)
     try {
       const lamports    = Math.floor(amountSol * 1e9)
-      const serialized  = await buildSwapTransaction(fromMint, toMint, lamports, address)
+      const serialized  = await buildLifiSwapTransaction(fromMint, toMint, lamports, address!)
       const sig         = await signAndSend(serialized)
       Alert.alert('Swap complete!', `Signature: ${sig.slice(0, 16)}...`)
       setFromAmount('')

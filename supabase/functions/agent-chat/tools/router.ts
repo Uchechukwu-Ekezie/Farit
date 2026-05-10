@@ -15,7 +15,7 @@ export async function executeTool(
       return getBalance((input.wallet_address as string) ?? walletAddress)
 
     case 'get_quote':
-      return getQuote(input)
+      return getQuote(input, walletAddress)
 
     case 'execute_swap':
       return buildSwapTx(input, walletAddress)
